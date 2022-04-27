@@ -1,3 +1,29 @@
+# Preprocessing function
+# Text cleaning
+def text_clean(text):
+  text = text.lower()  # Lowercase text
+  text = re.sub(r"<p[^>]*>(.*?)</p>", r"\1", text)
+  text = re.sub(r"[^A-Za-z\s]+", "", text)
+  #text = text.lower()  # Lowercase text
+  clean_tokens = [t for t in text.split() if len(t) > 1]
+  clean_text = " ".join(clean_tokens)
+  return clean_text
+
+# Function for text preprocessing using Spacy nlp object
+def process_text(text):
+    doc = nlp(text.lower())
+    result = []
+    for token in doc:
+        if token.text in nlp.Defaults.stop_words:
+            continue
+        if token.is_punct:
+            continue
+        if token.lemma_ == '-PRON-':
+            continue
+        result.append(token.lemma_)
+    return " ".join(result)
+
+
 # Lowercase text
 sample_text = "THIS TEXT WILL BE LOWERCASED. THIS WON'T: ßßß"
 clean_text = sample_text.lower()
