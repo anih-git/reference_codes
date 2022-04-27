@@ -1,7 +1,4 @@
-# To Lower case 
-Lowercase text
-It's fairly common to lowercase text for NLP tasks. Luckily, Python strings include a .lower() method that makes that easy for you. Here's how you use it:
-
+# Lowercase text
 sample_text = "THIS TEXT WILL BE LOWERCASED. THIS WON'T: ßßß"
 clean_text = sample_text.lower()
 print_text(sample_text, clean_text)
@@ -9,9 +6,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: THIS TEXT WILL BE LOWERCASED. THIS WON'T: ßßß
 # After: this text will be lowercased. this won't: ßßß
-Remove cases (useful for caseles matching)
-Casefolding is commono approach used for matching strings (especially in languages other than English). Python strings provide you with .casefold() for that. Here's how to use it:
 
+# Remove cases (useful for caseles matching)
 sample_text = "THIS TEXT WILL BE LOWERCASED. THIS too: ßßß"
 clean_text = sample_text.casefold()
 print_text(sample_text, clean_text)
@@ -19,11 +15,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: THIS TEXT WILL BE LOWERCASED. THIS too: ßßß
 # After: this text will be lowercased. this too: ssssss
-Remove hyperlinks
-If you're doing web scrapping, you'll often find yourself dealing with hyperlinks. It's possible that you'd like to remove those to analyze the text. The easiest way to do that is by using regular expressions.
 
-Python's re library it's handy for those cases. This is how you'd remove hyperlinks using it:
-
+# Remove hyperlinks
 import re
 
 sample_text = "Some URLs: https://example.com http://example.io http://exam-ple.com More text"
@@ -33,11 +26,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: Some URLs: https://example.com http://example.io http://exam-ple.com More text
 # After: Some URLs:    More text
-Remove <a> tags but keep their content
-Similar to the previous case, if you're doing web scrapping, you might often find dealing with tags. In some cases, like <a> tags, you might want to remove the tag and its attributes but not its contents (e.g. the text it contains).
 
-You can use Python's re for that. Here's how you'd remove the <a> tag and its attributes while keeping its content:
-
+# Remove <a> tags but keep their content
 import re
 
 sample_text = "Here's <a href='https://example.com'> a tag</a>"
@@ -47,11 +37,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: Here's <a href='https://example.com'> a tag</a>
 # After: Here's  a tag
-You can also use this snippet as a starting point to remove other types of tags.
 
-Remove all HTML tags but keep their contents
-If you're dealing with webpages and want to remove all the tags in a document, you can use a generalized version of the previous snippet. Here's how you remove all the HTML tags using Python's re library:
-
+# Remove all HTML tags but keep their contents
 import re
 
 sample_text = """
@@ -73,12 +60,9 @@ print_text(sample_text, clean_text)
 # After: 
 
 #  This is a sample text with lots of tags 
-Remove extra spaces, tabs, and line breaks
-You might think that the best approach to remove extra spaces, tabs, and line breaks would depend on regular expressions. But it doesn't.
-
-The best approach consists of using a clever combination two string methods: .split() and .join(). First, you apply the .split() method to the string you want to clean. It will split the string by any whitespace and output a list. Then, you apply the .join() method on a string with a single whitespace (" "), using as input the list you generated. This will put back together the string you split but using a single whitespace as separator.
-
-Yes, I know it sounds a bit confusing. But, in reality, it's fairly simple. Here's how it looks on code:
+# Remove extra spaces, tabs, and line breaks
+# You might think that the best approach to remove extra spaces, tabs, and line breaks would depend on regular expressions. But it doesn't.
+# The best approach consists of using a clever combination two string methods: .split() and .join(). First, you apply the .split() method to the string you want to clean. It will split the string by any whitespace and output a list. Then, you apply the .join() method on a string with a single whitespace (" "), using as input the list you generated. This will put back together the string you split but using a single whitespace as separator.
 
 sample_text = "     \t\tA      text\t\t\t\n\n sample       "
 clean_text = " ".join(sample_text.split())
@@ -89,9 +73,8 @@ print_text(sample_text, clean_text)
 
 #  sample       
 # After: A text sample
-Remove punctuation
-Many NLP applications won't work very well if you include punctuation. So it's common to remove them. The easiest approach consists in using the string and re standard libraries as follows:
 
+# Remove punctuation
 import re
 from string import punctuation
 
@@ -102,9 +85,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: A lot of !!!! .... ,,,, ;;;;;;;?????
 # After: A lot of   
-Remove numbers
-In some cases you might want to remove numbers from text, when you don't feel their very informative. You can use a regular expression for that:
 
+# Remove numbers
 import re
 
 sample_text = "Remove these numbers: 1919191 2229292 11.233 22/22/22. But don't remove this one H2O"
@@ -114,11 +96,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: Remove these numbers: 1919191 2229292 11.233 22/22/22. But don't remove this one H2O
 # After: Remove these numbers: .//. But don't remove this one H2O
-Remove digits
-There are cases where you might want to remove digits instead of any number. For instance, when you want to remove numbers but not dates. Using a regular expression gets a bit trickier.
 
-In those cases, you can use the .isdigit() method of strings:
-
+# Remove digits
 sample_text = "I want to keep this one: 10/10/20 but not this one 222333"
 clean_text = " ".join([w for w in sample_text.split() if not w.isdigit()]) # Side effect: removes extra spaces
 print_text(sample_text, clean_text)
@@ -126,10 +105,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: I want to keep this one: 10/10/20 but not this one 222333
 # After: I want to keep this one: 10/10/20 but not this one
-Remove non-alphabetic characters
-In some cases, you'd like to remove non-alphabetic characters like numbers, or punctuation. The .isalpha() method of Python strings will come handy in those cases.
 
-Here's how you use it:
+# Remove non-alphabetic characters
 
 sample_text = "Sample text with numbers 123455 and words !!!"
 clean_text = " ".join([w for w in sample_text.split() if w.isalpha()]) # Side effect: removes extra spaces
@@ -138,11 +115,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: Sample text with numbers 123455 and words !!!
 # After: Sample text with numbers and words
-Remove all special characters and punctuation
-In cases where you want to remove all characters except letters and numbers, you can use a regular expression.
 
-Here's a quick way to do it:
-
+# Remove all special characters and punctuation
 import re
 
 sample_text = "Sample text 123 !!!! Haha.... !!!! ##$$$%%%%"
@@ -152,9 +126,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: Sample text 123 !!!! Haha.... !!!! ##$$$%%%%
 # After: Sample text 123  Haha
-Remove stopwords from a list
-There's case where you'd like to exclude words using a predefined list. A quick way to do it is by using list comprehensions. Here's one way to do it:
 
+# Remove stopwords from a list
 stopwords = ["is", "a"]
 sample_text = "this is a sample text"
 tokens = sample_text.split()
@@ -165,9 +138,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: this is a sample text
 # After: this sample text
-Remove short tokens
-In some cases, you may want to remove tokens that are too short (e.g., tokens with just one character). In this case, using list comprehensions will make it easy:
 
+# Remove short tokens
 sample_text = "this is a sample text. I'll remove the a"
 tokens = sample_text.split()
 clean_tokens = [t for t in tokens if len(t) > 1]
@@ -177,11 +149,8 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: this is a sample text. I'll remove the a
 # After: this is sample text. I'll remove the
-Transform emojis to characters
-If you're processing social media data, there might be cases where you'd like to extract the meaning of emojis instead of simply removing them. An easy way to do that, is by using the emoji library.
 
-Here's how you do it:
-
+# Transform emojis to characters
 from emoji import demojize
 
 sample_text = "I love 🥑"
@@ -191,10 +160,12 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: I love 🥑
 # After: I love :avocado:
-NLTK
-Before using NLTK's snippets, you need to install NLTK. You can do that as follows: pip install nltk.
 
-Tokenize text using NLTK
+# NLTK
+# install NLTK
+pip install nltk.
+
+# Tokenize text using NLTK
 from nltk.tokenize import word_tokenize
 
 sample_text = "this is a text ready to tokenize"
@@ -204,7 +175,8 @@ print_text(sample_text, tokens)
 # ----- Expected output -----
 # Before: this is a text ready to tokenize
 # After: ['this', 'is', 'a', 'text', 'ready', 'to', 'tokenize']
-Tokenize tweets using NLTK
+
+#Tokenize tweets using NLTK
 from nltk.tokenize import TweetTokenizer
 
 tweet_tokenizer = TweetTokenizer()
@@ -215,7 +187,8 @@ print_text(sample_text, tokens)
 # ----- Expected output -----
 # Before: This is a tweet @jack #NLP
 # After: ['This', 'is', 'a', 'tweet', '@jack', '#NLP']
-Split text into sentences using NLTK
+
+#Split text into sentences using NLTK
 from nltk.tokenize import sent_tokenize
 
 sample_text = "This is a sentence. This is another one!\nAnd this is the last one."
@@ -226,7 +199,8 @@ print_text(sample_text, sentences)
 # Before: This is a sentence. This is another one!
 # And this is the last one.
 # After: ['This is a sentence.', 'This is another one!', 'And this is the last one.']
-Remove stopwords using NLTK
+
+# Remove stopwords using NLTK
 import nltk
 
 from nltk.corpus import stopwords
@@ -244,8 +218,14 @@ print_text(sample_text, clean_text)
 # ----- Expected output -----
 # Before: this is a sample text
 # After: sample text
-spaCy
-Before using spaCy's snippets, you need to install the library as follows: pip install spacy. You also need to download a language model. For English, here's how you do it: python -m spacy download en_core_web_sm.
+
+# spaCy
+
+# Install Spacy
+pip install spacy
+
+# Get language model -- ref(https://spacy.io/models/en)
+!python -m spacy download en_core_web_sm
 
 Tokenize text using spaCy
 import spacy
@@ -260,9 +240,9 @@ print_text(sample_text, tokens)
 # ----- Expected output -----
 # Before: this is a text ready to tokenize
 # After: ['this', 'is', 'a', 'text', 'ready', 'to', 'tokenize']
-Split text into sentences using spaCy
-import spacy
 
+# Split text into sentences using spaCy
+import spacy
 nlp = spacy.load("en_core_web_sm")
 
 sample_text = "This is a sentence. This is another one!\nAnd this is the last one."
@@ -274,7 +254,8 @@ print_text(sample_text, sentences)
 # Before: This is a sentence. This is another one!
 # And this is the last one.
 # After: ['This is a sentence.', 'This is another one!\n', 'And this is the last one.']
-Keras
+
+# Keras
 Before using Keras' snippets, you need to install the library as follows: pip install tensorflow && pip install keras.
 
 Tokenize text using Keras
